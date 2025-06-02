@@ -228,15 +228,21 @@ let similarAds = [
 // получаем блок, куда будем отрисовывать объявления .map__pins
 let mapPins = document.querySelector('.map__pins')
 
-// получаем шаблон, по которому будем клонировать объявления 
+// получаем блок, куда будем отрисовывать доступные удобства .popup__features
+let popupFeatures = document.querySelector('template').content.querySelector('.popup__features')
+
+// получаем шаблоны, по которому будем клонировать объявления 
 let AdsTemplate = document.querySelector('template').content.querySelector('.map__card')
 let mapPinTemplate = document.querySelector('template').content.querySelector('.map__pin')
+let popupFeaturesTemplate = document.querySelector('template').content.querySelector('.feature')
 
 
 let similarAdsNearby = function (similarAds) {
     for (let i = 0; i < similarAds.length; i++) {
         let adsElement = mapPins.appendChild(AdsTemplate.cloneNode(true))
         let mapPinBtn = mapPins.appendChild(mapPinTemplate.cloneNode(true))
+        
+
         mapPinBtn.querySelector('img').src = similarAds[i].author.avatar
         mapPinBtn.querySelector('img').alt = similarAds[i].offer.title
         mapPinBtn.style.left = similarAds[i].location.x + 'px'
@@ -245,6 +251,7 @@ let similarAdsNearby = function (similarAds) {
         adsElement.querySelector('.popup__title').textContent = similarAds[i].offer.title
         adsElement.querySelector('p > small').textContent = similarAds[i].offer.address
         adsElement.querySelector('.popup__price').textContent = similarAds[i].offer.price
+        
 
         if (similarAds[i].offer.type == 'flat') {
             adsElement.querySelector('h4').textContent = 'Квартира'
@@ -261,8 +268,17 @@ let similarAdsNearby = function (similarAds) {
         adsElement.querySelector('.popup__text--capacity').textContent = similarAds[i].offer.rooms + ' комнат для ' + similarAds[i].offer.guests + ' гостей'
         adsElement.querySelector('.popup__text--сheckin').textContent = 'Заезд после ' + similarAds[i].offer.checkin + ' выезд до ' + similarAds[i].offer.checkout
 
+        
+        for (let j = 0; j < similarAds[i].offer.features.length; j++) {
+            if (similarAds[i].offer.features[j] == 'dishwasher') {
+                let popupFeaturesItem = popupFeatures.appendChild(popupFeaturesTemplate.cloneNode(true))
+            popupFeaturesItem.classList.add('feature--wifi')
+            }
+            
+        }
+
     }
 
 }
 similarAdsNearby(similarAds)
-
+console.log(popupFeatures);
