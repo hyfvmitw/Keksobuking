@@ -279,6 +279,19 @@ let similarAdsNearby = function (similarAds) {
         // Вывод описания объекта недвижимости в блок .popup__description
         adsTemplate.content.querySelector('.popup__description').textContent = similarAds[i].offer.description
 
+        // Вывод всех фотографий из списка в блок .popup__photos в произвольном порядке
+
+        let popupPhotosArr = []
+        for (let a = 0; a < similarAds[i].offer.photos.length; a++) {
+        popupPhotosArr.push('<li><img src="' + similarAds[i].offer.photos[a] + '" width="210" height="148"></li>')
+        }
+        let photosArrShuffle = function (array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+        photosArrShuffle(popupPhotosArr)
+        popupPhotosList = popupPhotosArr.join('')
+        adsTemplate.content.querySelector('.popup__pictures').innerHTML = popupPhotosList
+
 
 
 
