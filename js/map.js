@@ -1,16 +1,6 @@
 // У блока .map уберите класс .map--faded.
 document.querySelector('.map').classList.remove('map--faded')
 
-/* --- Функция возвращающая массив данных в графу author:avatar --- */
-
-// let avatarLink = []
-// let authorAvatar = function() {
-//     for (let i = 1; i <= 8; i++) {
-//         avatarLink.push('img/avatars/user0' + i  + '.png')
-//     }
-//     return avatarLink
-// }
-
 /* --- Функция возвращающая массив случайных координат location --- */
 
 let randomLocation = function () {
@@ -51,7 +41,8 @@ let adsPrice = function () {
 }
 let price = adsPrice()
 
-// similarAds[0].offer.features[0]
+/* --- Массив данных для шаблона <template> --- */
+
 let similarAds = [
     //similarAds[0]
     {
@@ -66,7 +57,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-            description: '',
+            description: 'description0',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -87,7 +78,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'washer', 'conditioner'],
-            description: '',
+            description: 'description1',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -108,7 +99,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'parking', 'washer', 'conditioner'],
-            description: '',
+            description: 'description2',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -129,7 +120,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'parking', 'conditioner'],
-            description: '',
+            description: 'description3',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -150,7 +141,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-            description: '',
+            description: 'description4',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -171,7 +162,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'washer', 'conditioner'],
-            description: '',
+            description: 'description5',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -192,7 +183,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'parking', 'washer', 'conditioner'],
-            description: '',
+            description: 'description6',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -213,7 +204,7 @@ let similarAds = [
             checkin: '14:00',
             checkout: '10:00',
             features: ['wifi', 'parking', 'conditioner'],
-            description: '',
+            description: 'description7',
             photos: ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"],
         },
         location: {
@@ -224,19 +215,6 @@ let similarAds = [
 ]
 
 /* --- отрисовка шаблона в документ --- */
-
-
-
-
-
-
-
-
-// console.log(similarAds[i].author.avatar)
-// меняем в шаблоне аватаров авторов
-// adsTemplate.content.querySelector('.popup__avatar').src = similarAds[0].author.avatar
-
-// console.log(adsTemplate.content.querySelector('.popup__avatar'));
 
 let similarAdsNearby = function (similarAds) {
 
@@ -270,29 +248,38 @@ let similarAdsNearby = function (similarAds) {
         // получаем элемент шаблона и меняем цену в объявлении в popup__title
         adsTemplate.content.querySelector('.popup__price').textContent = similarAds[i].offer.price
 
+        // В блок .popup__type выведим тип жилья в зависимости от данных в массиве
         if (similarAds[i].offer.type == 'flat') {
-            adsTemplate.content.querySelector('h4').textContent = 'Квартира'
+            adsTemplate.content.querySelector('.popup__type').textContent = 'Квартира'
         }
         else if (similarAds[i].offer.type == 'bungalo') {
-            adsTemplate.content.querySelector('h4').textContent = 'Бунгало'
+            adsTemplate.content.querySelector('.popup__type').textContent = 'Бунгало'
         }
         else if (similarAds[i].offer.type == 'house') {
-            adsTemplate.content.querySelector('h4').textContent = 'Дом'
+            adsTemplate.content.querySelector('.popup__type').textContent = 'Дом'
         }
         else if (similarAds[i].offer.type == 'palace') {
-            adsTemplate.content.querySelector('h4').textContent = 'Дворец'
+            adsTemplate.content.querySelector('.popup__type').textContent = 'Дворец'
         }
 
+        // Вывод количества гостей и комнат в блок .popup__text--capacity
         adsTemplate.content.querySelector('.popup__text--capacity').textContent = similarAds[i].offer.rooms + ' комнат для ' + similarAds[i].offer.guests + ' гостей'
+        
+        // Вывод время заезда и выезда в блок .popup__text--сheckin
         adsTemplate.content.querySelector('.popup__text--сheckin').textContent = 'Заезд после ' + similarAds[i].offer.checkin + ' выезд до ' + similarAds[i].offer.checkout
 
+        // Вывод в список все доступные удобства в объявлении в блок .popup__features .
         let popupFeaturesArr = []
         for (let t = 0; t < similarAds[i].offer.features.length; t++) {
         popupFeaturesArr.push('<li class="feature feature--' + similarAds[i].offer.features[t] + '"></li>')
         }
         popupFeaturesList = popupFeaturesArr.join('')
-
         adsTemplate.content.querySelector('.popup__features').innerHTML = popupFeaturesList
+
+        // Вывод описания объекта недвижимости в блок .popup__description
+        adsTemplate.content.querySelector('.popup__description').textContent = similarAds[i].offer.description
+
+
 
 
         // заносим клон (дубликат) шаблона в переменную
