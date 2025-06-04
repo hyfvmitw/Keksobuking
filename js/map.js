@@ -51,7 +51,7 @@ let adsPrice = function () {
 }
 let price = adsPrice()
 
-
+// similarAds[0].offer.features[0]
 let similarAds = [
     //similarAds[0]
     {
@@ -225,60 +225,84 @@ let similarAds = [
 
 /* --- отрисовка шаблона в документ --- */
 
-// получаем блок, куда будем отрисовывать объявления .map__pins
-let mapPins = document.querySelector('.map__pins')
 
-// получаем блок, куда будем отрисовывать доступные удобства .popup__features
-let popupFeatures = document.querySelector('template').content.querySelector('.popup__features')
 
-// получаем шаблоны, по которому будем клонировать объявления 
-let AdsTemplate = document.querySelector('template').content.querySelector('.map__card')
-let mapPinTemplate = document.querySelector('template').content.querySelector('.map__pin')
-let popupFeaturesTemplate = document.querySelector('template').content.querySelector('.feature')
 
+
+
+
+
+// console.log(similarAds[i].author.avatar)
+// меняем в шаблоне аватаров авторов
+// adsTemplate.content.querySelector('.popup__avatar').src = similarAds[0].author.avatar
+
+// console.log(adsTemplate.content.querySelector('.popup__avatar'));
 
 let similarAdsNearby = function (similarAds) {
-    for (let i = 0; i < similarAds.length; i++) {
-        let adsElement = mapPins.appendChild(AdsTemplate.cloneNode(true))
-        let mapPinBtn = mapPins.appendChild(mapPinTemplate.cloneNode(true))
-        
 
-        mapPinBtn.querySelector('img').src = similarAds[i].author.avatar
-        mapPinBtn.querySelector('img').alt = similarAds[i].offer.title
-        mapPinBtn.style.left = similarAds[i].location.x + 'px'
-        mapPinBtn.style.top = similarAds[i].location.y + 'px'
-        adsElement.querySelector('.popup__avatar').src = similarAds[i].author.avatar
-        adsElement.querySelector('.popup__title').textContent = similarAds[i].offer.title
-        adsElement.querySelector('p > small').textContent = similarAds[i].offer.address
-        adsElement.querySelector('.popup__price').textContent = similarAds[i].offer.price
-        
+    // получаем блок, куда будем отрисовывать объявления .map__pins
+    let mapPins = document.querySelector('.map__pins')
+
+    // получаем полный шаблон, по которому будем клонировать объявления 
+    let adsTemplate = document.querySelector('template')
+
+    for (let i = 0; i < similarAds.length; i++) {
+
+        // получаем элемент шаблона и меняем SRC у popup__avatar
+        adsTemplate.content.querySelector('.popup__avatar').src = similarAds[i].author.avatar
+
+        // получаем элемент шаблона и меняем SRC у btn__img
+        adsTemplate.content.querySelector('.btn__img').src = similarAds[i].author.avatar
+
+        // получаем элемент шаблона и меняем alt у btn__img
+        adsTemplate.content.querySelector('.btn__img').alt = similarAds[i].offer.title
+
+        // получаем элемент шаблона и меняем координаты у map__pin
+        adsTemplate.content.querySelector('.map__pin').style.left = similarAds[i].location.x + 'px'
+        adsTemplate.content.querySelector('.map__pin').style.top = similarAds[i].location.y + 'px'
+
+        // получаем элемент шаблона и меняем название объявления в popup__title
+        adsTemplate.content.querySelector('.popup__title').textContent = similarAds[i].offer.title
+
+        // получаем элемент шаблона и меняем адрес объявления в popup__title
+        adsTemplate.content.querySelector('p > small').textContent = similarAds[i].offer.address
+
+        // получаем элемент шаблона и меняем цену в объявлении в popup__title
+        adsTemplate.content.querySelector('.popup__price').textContent = similarAds[i].offer.price
 
         if (similarAds[i].offer.type == 'flat') {
-            adsElement.querySelector('h4').textContent = 'Квартира'
+            adsTemplate.content.querySelector('h4').textContent = 'Квартира'
         }
         else if (similarAds[i].offer.type == 'bungalo') {
-            adsElement.querySelector('h4').textContent = 'Бунгало'
+            adsTemplate.content.querySelector('h4').textContent = 'Бунгало'
         }
         else if (similarAds[i].offer.type == 'house') {
-            adsElement.querySelector('h4').textContent = 'Дом'
+            adsTemplate.content.querySelector('h4').textContent = 'Дом'
         }
         else if (similarAds[i].offer.type == 'palace') {
-            adsElement.querySelector('h4').textContent = 'Дворец'
+            adsTemplate.content.querySelector('h4').textContent = 'Дворец'
         }
-        adsElement.querySelector('.popup__text--capacity').textContent = similarAds[i].offer.rooms + ' комнат для ' + similarAds[i].offer.guests + ' гостей'
-        adsElement.querySelector('.popup__text--сheckin').textContent = 'Заезд после ' + similarAds[i].offer.checkin + ' выезд до ' + similarAds[i].offer.checkout
 
-        
-        for (let j = 0; j < similarAds[i].offer.features.length; j++) {
-            if (similarAds[i].offer.features[j] == 'dishwasher') {
-                let popupFeaturesItem = popupFeatures.appendChild(popupFeaturesTemplate.cloneNode(true))
-            popupFeaturesItem.classList.add('feature--wifi')
-            }
-            
+        adsTemplate.content.querySelector('.popup__text--capacity').textContent = similarAds[i].offer.rooms + ' комнат для ' + similarAds[i].offer.guests + ' гостей'
+        adsTemplate.content.querySelector('.popup__text--сheckin').textContent = 'Заезд после ' + similarAds[i].offer.checkin + ' выезд до ' + similarAds[i].offer.checkout
+
+        let popupFeaturesArr = []
+        for (let t = 0; t < similarAds[i].offer.features.length; t++) {
+        popupFeaturesArr.push('<li class="feature feature--' + similarAds[i].offer.features[t] + '"></li>')
         }
+        popupFeaturesList = popupFeaturesArr.join('')
+
+        adsTemplate.content.querySelector('.popup__features').innerHTML = popupFeaturesList
+
+
+        // заносим клон (дубликат) шаблона в переменную
+        let adsTemplateClone = adsTemplate.content.cloneNode(true)
+        // клонируем клон (дубликат) шаблона в необходимое нам место
+        mapPins.appendChild(adsTemplateClone)
 
     }
 
 }
+
 similarAdsNearby(similarAds)
-console.log(popupFeatures);
+

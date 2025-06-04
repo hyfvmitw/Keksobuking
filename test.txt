@@ -43,3 +43,18 @@
 
 var listItem = document.createElement('li')
 listItem.classList.add('product')
+
+
+
+function popupFeatures(tag) {
+                let featuresItem = new DocumentFragment();
+                for (let i = 0; i < similarAds[i].offer.features.length; i++) {
+                    let li = document.createElement('tag');
+                    li.classList.add('feature')
+                    li.classList.add('feature--' + similarAds[i].offer.features[i])
+                    featuresItem.append(li);
+                    // console.log(featuresItem);
+                }
+                return featuresItem;
+            }
+            popupFeatures(li)
