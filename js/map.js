@@ -1,5 +1,9 @@
+let notice = document.querySelector('.notice')
+notice.querySelectorAll('fieldset')
+console.log(notice.querySelectorAll('fieldset'));
+
 // У блока .map уберите класс .map--faded.
-document.querySelector('.map').classList.remove('map--faded')
+// document.querySelector('.map').classList.remove('map--faded')
 
 /* --- Функция возвращающая массив случайных координат location --- */
 
@@ -304,5 +308,5 @@ let similarAdsNearby = function (similarAds) {
 
 }
 
-similarAdsNearby(similarAds)
+// similarAdsNearby(similarAds)
 
