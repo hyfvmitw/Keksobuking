@@ -1,9 +1,13 @@
-let notice = document.querySelector('.notice')
-notice.querySelectorAll('fieldset')
-console.log(notice.querySelectorAll('fieldset'));
-
 // У блока .map уберите класс .map--faded.
 // document.querySelector('.map').classList.remove('map--faded')
+
+/* --- добавим через DOM-операции fieldset атрибут disabled. --- */
+
+let notice = document.querySelector('.notice')
+let noticeFieldset = notice.querySelectorAll('fieldset')
+for (let i = 0; i < noticeFieldset.length; i++) {
+    noticeFieldset[i].setAttribute('disabled', 'true');
+}
 
 /* --- Функция возвращающая массив случайных координат location --- */
 
@@ -268,14 +272,14 @@ let similarAdsNearby = function (similarAds) {
 
         // Вывод количества гостей и комнат в блок .popup__text--capacity
         adsTemplate.content.querySelector('.popup__text--capacity').textContent = similarAds[i].offer.rooms + ' комнат для ' + similarAds[i].offer.guests + ' гостей'
-        
+
         // Вывод время заезда и выезда в блок .popup__text--сheckin
         adsTemplate.content.querySelector('.popup__text--сheckin').textContent = 'Заезд после ' + similarAds[i].offer.checkin + ' выезд до ' + similarAds[i].offer.checkout
 
         // Вывод в список все доступные удобства в объявлении в блок .popup__features .
         let popupFeaturesArr = []
         for (let t = 0; t < similarAds[i].offer.features.length; t++) {
-        popupFeaturesArr.push('<li class="feature feature--' + similarAds[i].offer.features[t] + '"></li>')
+            popupFeaturesArr.push('<li class="feature feature--' + similarAds[i].offer.features[t] + '"></li>')
         }
         popupFeaturesList = popupFeaturesArr.join('')
         adsTemplate.content.querySelector('.popup__features').innerHTML = popupFeaturesList
@@ -287,7 +291,7 @@ let similarAdsNearby = function (similarAds) {
 
         let popupPhotosArr = []
         for (let a = 0; a < similarAds[i].offer.photos.length; a++) {
-        popupPhotosArr.push('<li><img src="' + similarAds[i].offer.photos[a] + '" width="210" height="148"></li>')
+            popupPhotosArr.push('<li><img src="' + similarAds[i].offer.photos[a] + '" width="210" height="148"></li>')
         }
         let photosArrShuffle = function (array) {
             array.sort(() => Math.random() - 0.5);
