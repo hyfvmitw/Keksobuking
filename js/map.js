@@ -1,13 +1,14 @@
-// У блока .map уберите класс .map--faded.
-// document.querySelector('.map').classList.remove('map--faded')
+/* --- Получаем координаты и размеры блока map__pin--main --- */
+let mapPinMain = document.querySelector('.map__pin--main')
+let mapPinMainWidth = mapPinMain.offsetWidth
+let mapPinMainHeight = mapPinMain.offsetHeight
+let mapPinMainX = Math.floor(mapPinMain.offsetLeft + mapPinMainWidth / 2)
+let mapPinMainY = Math.floor(mapPinMain.offsetTop + mapPinMainHeight / 2)
 
-/* --- добавим через DOM-операции fieldset атрибут disabled. --- */
+/* --- И записываем в поле с адресом --- */
+let inputAddress = document.getElementById('address')
+inputAddress.setAttribute('placeholder', mapPinMainX + ', ' + mapPinMainY)
 
-let notice = document.querySelector('.notice')
-let noticeFieldset = notice.querySelectorAll('fieldset')
-for (let i = 0; i < noticeFieldset.length; i++) {
-    noticeFieldset[i].setAttribute('disabled', 'true');
-}
 
 /* --- Функция возвращающая массив случайных координат location --- */
 
@@ -234,6 +235,14 @@ let similarAdsNearby = function (similarAds) {
 
     for (let i = 0; i < similarAds.length; i++) {
 
+        // получаем элемент шаблона article и добавляем id ads-0i
+        adsTemplate.content.querySelector('article').setAttribute('id', 'ads-' + '0' + (i + 1))
+        // получаем элемент шаблона article прячем и добавляем display = none
+        adsTemplate.content.querySelector('article').style.display = 'none'
+
+        // получаем элемент шаблона и добавляем id map-pin-0i
+        adsTemplate.content.querySelector('.map__pin').setAttribute('id', 'map-pin-' + '0' + (i + 1))
+
         // получаем элемент шаблона и меняем SRC у popup__avatar
         adsTemplate.content.querySelector('.popup__avatar').src = similarAds[i].author.avatar
 
@@ -311,6 +320,27 @@ let similarAdsNearby = function (similarAds) {
     }
 
 }
+// 
 
-// similarAdsNearby(similarAds)
+/* --- добавим через DOM-операции fieldset атрибут disabled. --- */
 
+let notice = document.querySelector('.notice')
+let noticeFieldset = notice.querySelectorAll('fieldset')
+for (let i = 0; i < noticeFieldset.length; i++) {
+    noticeFieldset[i].setAttribute('disabled', 'true');
+}
+
+
+mapPinMain.addEventListener('mouseup', function () {
+
+    // У блока .map убераем класс .map--faded по событию mouseup
+    document.querySelector('.map').classList.remove('map--faded')
+    let notice = document.querySelector('.notice')
+    let noticeFieldset = notice.querySelectorAll('fieldset')
+    for (let i = 0; i < noticeFieldset.length; i++) {
+        noticeFieldset[i].removeAttribute('disabled');
+    }
+    similarAdsNearby(similarAds)
+
+
+}) 
