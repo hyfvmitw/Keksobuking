@@ -257,7 +257,7 @@ let similarAdsNearby = function (similarAds) {
         // получаем элемент шаблона и меняем координаты у map__pin
         adsTemplate.content.querySelector('.map__pin').style.left = similarAds[i].location.x + 'px'
         adsTemplate.content.querySelector('.map__pin').style.top = similarAds[i].location.y + 'px'
-       
+
         // получаем элемент шаблона и прячем map__pin
         adsTemplate.content.querySelector('.map__pin').classList.add('hidden')
 
@@ -344,29 +344,42 @@ mapPinMain.addEventListener('mouseup', function () { // обработчик с�
     let mapPinArr = document.querySelectorAll('.map__pin')
     let notice = document.querySelector('.notice')
     let noticeFieldset = notice.querySelectorAll('fieldset')
-    
+
     for (let i = 0; i < noticeFieldset.length; i++) {
         noticeFieldset[i].removeAttribute('disabled');
     }
-    
+
     for (let i = 0; i < mapPinArr.length; i++) {
         mapPinArr[i].classList.remove('hidden')
     }
-    
-    
-    
+
 })
 
-let buttons = document.querySelectorAll('.map__pin')
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            alert('Click')
-        })
-    })
+let mapPins = document.querySelectorAll('.map__pin.hidden')
+let articles = document.querySelectorAll('article.map__card')
+console.log(articles);
+// .classList.add('hidden')
+console.log(mapPins);
 
 
-// let mapPinClick = document.querySelector('.map__pin')
+function openArticle(){
+  let index = Array.from(mapPins).indexOf(this);
+  articles[index].classList.remove('hidden')
+}
+
+mapPins.forEach( mapPin => mapPin.addEventListener( 'click', openArticle ) );
+
+// buttons.forEach((button, index) => {
+//     button.addEventListener('click', (evt) => {
+//         console.log(evt);
+//         if (index !== 0) {  // пропускаем первую итерацию массива
+//             console.log(button.nextSibling);
+//         }
+
+//     })
+// })
+
+
 
 /* --- 
 
