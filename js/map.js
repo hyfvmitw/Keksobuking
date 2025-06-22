@@ -237,8 +237,10 @@ let similarAdsNearby = function (similarAds) {
 
         // получаем элемент шаблона article и добавляем id ads-0i
         adsTemplate.content.querySelector('article').setAttribute('id', 'ads-' + '0' + (i + 1))
-        // получаем элемент шаблона article прячем и добавляем display = none
-        adsTemplate.content.querySelector('article').style.display = 'none'
+
+        // получаем элемент шаблона article прячем добавляя display = none
+        // adsTemplate.content.querySelector('article').style.display = 'none'
+        adsTemplate.content.querySelector('article').classList.add('hidden')
 
         // получаем элемент шаблона и добавляем id map-pin-0i
         adsTemplate.content.querySelector('.map__pin').setAttribute('id', 'map-pin-' + '0' + (i + 1))
@@ -255,6 +257,9 @@ let similarAdsNearby = function (similarAds) {
         // получаем элемент шаблона и меняем координаты у map__pin
         adsTemplate.content.querySelector('.map__pin').style.left = similarAds[i].location.x + 'px'
         adsTemplate.content.querySelector('.map__pin').style.top = similarAds[i].location.y + 'px'
+       
+        // получаем элемент шаблона и прячем map__pin
+        adsTemplate.content.querySelector('.map__pin').classList.add('hidden')
 
         // получаем элемент шаблона и меняем название объявления в popup__title
         adsTemplate.content.querySelector('.popup__title').textContent = similarAds[i].offer.title
@@ -320,7 +325,8 @@ let similarAdsNearby = function (similarAds) {
     }
 
 }
-// 
+
+similarAdsNearby(similarAds)
 
 /* --- добавим через DOM-операции fieldset атрибут disabled. --- */
 
@@ -331,16 +337,49 @@ for (let i = 0; i < noticeFieldset.length; i++) {
 }
 
 
-mapPinMain.addEventListener('mouseup', function () {
+mapPinMain.addEventListener('mouseup', function () { // обработчик события при отпускании левой кнопки мыши
 
     // У блока .map убераем класс .map--faded по событию mouseup
     document.querySelector('.map').classList.remove('map--faded')
+    let mapPinArr = document.querySelectorAll('.map__pin')
     let notice = document.querySelector('.notice')
     let noticeFieldset = notice.querySelectorAll('fieldset')
+    
     for (let i = 0; i < noticeFieldset.length; i++) {
         noticeFieldset[i].removeAttribute('disabled');
     }
-    similarAdsNearby(similarAds)
+    
+    for (let i = 0; i < mapPinArr.length; i++) {
+        mapPinArr[i].classList.remove('hidden')
+    }
+    
+    
+    
+})
+
+let buttons = document.querySelectorAll('.map__pin')
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            alert('Click')
+        })
+    })
 
 
-}) 
+// let mapPinClick = document.querySelector('.map__pin')
+
+/* --- 
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelector('.btn.active').classList.remove('active')
+        button.classList.add('active')
+    })
+})
+
+
+let articles = document.querySelector('article')
+
+articles.forEach
+
+--- */
