@@ -235,7 +235,7 @@ let similarAdsNearby = function (similarAds) {
 
     for (let i = 0; i < similarAds.length; i++) {
 
-           // получаем элемент шаблона article прячем добавляя classList.add('hidden')
+        // получаем элемент шаблона article прячем добавляя classList.add('hidden')
         adsTemplate.content.querySelector('article').classList.add('hidden')
 
         // получаем элемент шаблона и добавляем id map-pin-0i
@@ -337,16 +337,16 @@ mapPinMain.addEventListener('mouseup', function () { // обработчик с�
 
     // У блока .map убераем класс .map--faded по событию mouseup
     document.querySelector('.map').classList.remove('map--faded')
-    
+
     let mapPins = document.querySelectorAll('.map__pin')
     let notice = document.querySelector('.notice')
     let noticeFieldset = notice.querySelectorAll('fieldset')
 
-    noticeFieldset.forEach(function(item) { // сняли блокировку с полей ввода
-        item.removeAttribute('disabled')
+    noticeFieldset.forEach(function (fieldsetItem) { // сняли блокировку с полей ввода
+        fieldsetItem.removeAttribute('disabled')
     })
-    mapPins.forEach(function(item){ // открыли спрятанные маркеры
-        item.classList.remove('hidden')
+    mapPins.forEach(function (mapPinsItem) { // открыли спрятанные маркеры
+        mapPinsItem.classList.remove('hidden')
     })
 
 })
@@ -355,20 +355,38 @@ let mapPins = document.querySelectorAll('.map__pin.hidden')
 let articles = document.querySelectorAll('article.map__card')
 let popupClose = document.querySelectorAll('.popup__close')
 
+const ESC_KEYCODE = 'Escape';
+// let openArticleEscPress = function (evt) {
+//     if (evt.key === ESC_KEYCODE) {
+//         console.log(evt.key)
+//         // closeArticle()
+        
+//     }
+// }
+
+function openArticleEscPress(evt) {
+if (evt.key === ESC_KEYCODE) {
+        openArticle()
+}
+}
+
 function openArticle() {
+    articles.forEach(article => article.classList.add('hidden'))
+    document.addEventListener('keydown', openArticleEscPress)
     let index = Array.from(mapPins).indexOf(this);
     articles[index].classList.remove('hidden')
 }
 
 function closeArticle() {
+    document.removeEventListener('keydown', openArticleEscPress);
     let index = Array.from(popupClose).indexOf(this);
     articles[index].classList.add('hidden')
 }
-// mapPins.forEach(mapPin => mapPin.addEventListener('click', openArticle));
-mapPins.forEach(function(mapPin) {
+
+
+mapPins.forEach(function (mapPin) {
     mapPin.addEventListener('click', openArticle)
 })
-
 
 popupClose.forEach(close => close.addEventListener('click', closeArticle));
 
