@@ -355,17 +355,29 @@ mapPinMain.addEventListener('mouseup', function () { // обработчик с�
 
 })
 
+let ESC_KEYCODE = 'Escape';
+let ENTER_KEYCODE = 'Enter';
+
 let mapPins = document.querySelectorAll('.map__pin.hidden')
 let articles = document.querySelectorAll('article.map__card')
-function openArticle(){
-  let index = Array.from(mapPins).indexOf(this);
-  articles[index].classList.remove('hidden')
+let popupClose = document.querySelectorAll('.popup__close')
+
+function openArticle() {
+    let index = Array.from(mapPins).indexOf(this);
+    articles[index].classList.remove('hidden')
 }
-mapPins.forEach( mapPin => mapPin.addEventListener( 'click', openArticle ) );
+
+function closeArticle() {
+    let index = Array.from(popupClose).indexOf(this);
+    articles[index].classList.add('hidden')
+}
+mapPins.forEach(mapPin => mapPin.addEventListener('click', openArticle));
+popupClose.forEach(close => close.addEventListener('click', closeArticle));
+
+
 
 
 /* --- 
-
 
 
 --- */
