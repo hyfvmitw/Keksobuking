@@ -235,11 +235,7 @@ let similarAdsNearby = function (similarAds) {
 
     for (let i = 0; i < similarAds.length; i++) {
 
-        // получаем элемент шаблона article и добавляем id ads-0i
-        adsTemplate.content.querySelector('article').setAttribute('id', 'ads-' + '0' + (i + 1))
-
-        // получаем элемент шаблона article прячем добавляя display = none
-        // adsTemplate.content.querySelector('article').style.display = 'none'
+           // получаем элемент шаблона article прячем добавляя classList.add('hidden')
         adsTemplate.content.querySelector('article').classList.add('hidden')
 
         // получаем элемент шаблона и добавляем id map-pin-0i
@@ -341,22 +337,19 @@ mapPinMain.addEventListener('mouseup', function () { // обработчик с�
 
     // У блока .map убераем класс .map--faded по событию mouseup
     document.querySelector('.map').classList.remove('map--faded')
-    let mapPinArr = document.querySelectorAll('.map__pin')
+    
+    let mapPins = document.querySelectorAll('.map__pin')
     let notice = document.querySelector('.notice')
     let noticeFieldset = notice.querySelectorAll('fieldset')
 
-    for (let i = 0; i < noticeFieldset.length; i++) {
-        noticeFieldset[i].removeAttribute('disabled');
-    }
-
-    for (let i = 0; i < mapPinArr.length; i++) {
-        mapPinArr[i].classList.remove('hidden')
-    }
+    noticeFieldset.forEach(function(item) { // сняли блокировку с полей ввода
+        item.removeAttribute('disabled')
+    })
+    mapPins.forEach(function(item){ // открыли спрятанные маркеры
+        item.classList.remove('hidden')
+    })
 
 })
-
-let ESC_KEYCODE = 'Escape';
-let ENTER_KEYCODE = 'Enter';
 
 let mapPins = document.querySelectorAll('.map__pin.hidden')
 let articles = document.querySelectorAll('article.map__card')
@@ -371,7 +364,12 @@ function closeArticle() {
     let index = Array.from(popupClose).indexOf(this);
     articles[index].classList.add('hidden')
 }
-mapPins.forEach(mapPin => mapPin.addEventListener('click', openArticle));
+// mapPins.forEach(mapPin => mapPin.addEventListener('click', openArticle));
+mapPins.forEach(function(mapPin) {
+    mapPin.addEventListener('click', openArticle)
+})
+
+
 popupClose.forEach(close => close.addEventListener('click', closeArticle));
 
 
